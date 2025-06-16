@@ -9,6 +9,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
     <!-- Chosen Palette: Warm Neutrals Enhanced for Professionalism (White, soft grey, charcoal text, subtle blue/green/purple/orange accents) -->
     <!-- Application Structure Plan: Создана структура интерактивного дашборда/резюме, а не линейного отчета. Она состоит из разделов: "Обзор", "Компетенции", "Достижения", "Проекты и Медиа", "Интеллектуальные Инструменты" и "Карьерные Возможности". Такая структура позволяет пользователю (например, рекрутеру) нелинейно исследовать профиль кандидата, быстро переходя к наиболее интересным для него данным. Интерактивные элементы, такие как временная шкала, вкладки и диаграммы, призваны повысить вовлеченность и сделать информацию более наглядной и легко усваиваемой. Раздел "Интеллектуальные Инструменты" использует LLM для генерации контента, демонстрируя потенциал использования ИИ в анализе резюме. Финальный раздел с анализом рынка подкрепляет ценность кандидата реальными данными о спросе и зарплатах. -->
     <!-- Visualization & Content Choices:
@@ -21,39 +22,6 @@
         - Новый контент: Предложение ресурсов для обучения -> Цель: Развитие/Обучение -> Визуализация: Текстовый вывод в модальном окне -> Взаимодействие: Клик по кнопке, вызов LLM -> Обоснование: Предлагает актуальные направления для профессионального роста, основанные на текущих навыках. -> Метод: Gemini API (gemini-2.0-flash).
     -->
     <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #fcfcfc; /* Lighter background */
-            color: #1f2937;
-        }
-        .chart-container {
-            position: relative;
-            width: 100%;
-            max-width: 800px;
-            margin-left: auto;
-            margin-right: auto;
-            height: 400px;
-            max-height: 50vh;
-        }
-        @media (min-width: 768px) {
-            .chart-container {
-                height: 500px;
-            }
-        }
-        .timeline-item::before {
-            content: '';
-            position: absolute;
-            width: 1rem;
-            height: 1rem;
-            border-radius: 50%;
-            left: -0.5rem;
-            top: 0.25rem;
-            background-color: #3b82f6;
-            border: 3px solid #fcfcfc; /* Match body background */
-            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3); /* Subtle glow */
-        }
-    </style>
 </head>
 <body class="antialiased">
 
@@ -73,6 +41,7 @@
                     <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
                 </button>
             </div>
+            <button id="theme-toggle" class="text-gray-600 focus:outline-none p-2 rounded-md hover:bg-gray-100">🌙</button>
         </nav>
         <div id="mobile-menu" class="hidden md:hidden bg-white shadow-inner">
             <a href="#overview" class="block py-3 px-6 text-base text-gray-700 hover:bg-gray-100 transition duration-200">Обзор</a>
@@ -680,6 +649,7 @@ ${resumeText}`;
             });
         });
     </script>
+    <script src="theme-toggle.js"></script>
 
 </body>
 </html>
