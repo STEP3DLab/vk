@@ -16,8 +16,7 @@
       --soft2: #fafafa;
       --max: 1160px;
       --read: 760px;
-      --side: 260px;
-      --radius: 0px;
+      --side: 270px;
     }
 
     * { box-sizing: border-box; }
@@ -302,7 +301,9 @@
     .cards,
     .scheme,
     .glossary,
-    .link-grid {
+    .link-grid,
+    .expert-panel,
+    .route-grid {
       display: grid;
       gap: 10px;
       font-family: Arial, sans-serif;
@@ -310,12 +311,16 @@
 
     .reading-card { grid-template-columns: repeat(3, 1fr); margin-top: 34px; }
     .expert-grid { grid-template-columns: repeat(5, 1fr); margin-top: 30px; }
+    .expert-panel { grid-template-columns: 1fr; margin: 30px 0; }
+    .route-grid { grid-template-columns: repeat(4, 1fr); margin: 30px 0; }
     .cards { grid-template-columns: 1fr 1fr; margin: 28px 0; }
     .glossary { grid-template-columns: 1fr 1fr; margin: 30px 0 0; }
     .link-grid { grid-template-columns: 1fr 1fr; margin: 30px 0; }
 
     .reading-card div,
     .expert-grid div,
+    .expert-item,
+    .route-step,
     .card,
     .term,
     .source-link,
@@ -326,12 +331,15 @@
       transition: transform 0.18s ease, border-color 0.18s ease, background 0.18s ease;
     }
 
-    .expert-grid div { border-top: 2px solid var(--text); }
+    .expert-grid div,
+    .expert-item { border-top: 2px solid var(--text); }
 
     .card:hover,
     .term:hover,
     .source-link:hover,
-    .next-link:hover {
+    .next-link:hover,
+    .expert-item:hover,
+    .route-step:hover {
       transform: translateY(-2px);
       border-color: var(--text);
       background: #fff;
@@ -339,6 +347,8 @@
 
     .reading-card b,
     .expert-grid b,
+    .expert-item b,
+    .route-step b,
     .card b,
     .term b,
     .source-link b,
@@ -353,6 +363,8 @@
 
     .reading-card span,
     .expert-grid div,
+    .expert-item span,
+    .route-step span,
     .card span,
     .term span,
     .source-link span,
@@ -380,7 +392,8 @@
     }
 
     .toc-box,
-    .formula {
+    .formula,
+    .summary-box {
       margin: 30px 0;
       padding: 24px;
       border: 1px solid var(--line);
@@ -391,7 +404,8 @@
     }
 
     .toc-box b,
-    .formula strong {
+    .formula strong,
+    .summary-box b {
       display: block;
       margin-bottom: 10px;
       font-size: 13px;
@@ -521,6 +535,7 @@
 
     @media (max-width: 860px) {
       .expert-grid { grid-template-columns: 1fr 1fr; }
+      .route-grid { grid-template-columns: 1fr 1fr; }
       .mobile-contents { display: block; }
     }
 
@@ -533,7 +548,7 @@
       main { padding-top: 38px; }
       h2 { font-size: 32px; }
       .subtitle, .lead, .thesis, .quote, .final p { font-size: 20px; }
-      .scheme, .cards, .expert-grid, .glossary, .reading-card, .link-grid { grid-template-columns: 1fr; }
+      .scheme, .cards, .expert-grid, .glossary, .reading-card, .link-grid, .route-grid { grid-template-columns: 1fr; }
       .matrix-row, .manifesto p { grid-template-columns: 1fr; gap: 8px; }
       .floating-tools { right: 12px; bottom: 12px; }
       .floating-tools a, .floating-tools button { width: 40px; height: 40px; }
@@ -550,7 +565,7 @@
       main { max-width: none; padding: 0; }
       .layout { display: block; }
       section { page-break-inside: avoid; border-bottom: 1px solid #999; }
-      .card, .term, .formula, .toc-box, .note, .thesis, .source-link, .next-link { background: #fff !important; }
+      .card, .term, .formula, .toc-box, .note, .thesis, .source-link, .next-link, .expert-item, .summary-box { background: #fff !important; }
     }
   </style>
 </head>
@@ -564,20 +579,20 @@
       <div class="brand">Философия формы</div>
       <nav aria-label="Навигация по статье">
         <a href="#start">Начало</a>
+        <a href="#expert-review">Эксперты</a>
         <a href="#question">Вопрос</a>
         <a href="#levels">Уровни</a>
         <a href="#history">История</a>
         <a href="#debate">Спор</a>
-        <a href="#practice">Практика</a>
         <a href="#method">Метод</a>
         <a href="#links">Ссылки</a>
-        <a href="#manifesto">Манифест</a>
         <a href="#conclusion">Вывод</a>
       </nav>
     </div>
     <div class="mobile-contents">
       <details>
         <summary>Карта чтения</summary>
+        <a href="#expert-review">Экспертная рамка</a>
         <a href="#question">1. Главный вопрос</a>
         <a href="#levels">2. Четыре уровня формы</a>
         <a href="#history">4. История идеи формы</a>
@@ -598,9 +613,10 @@
           <div class="label">Дискуссионная работа для чтения</div>
           <h1>Философия формы</h1>
           <p class="subtitle">Форма - это не только внешний вид вещи. Это способ, благодаря которому материал становится определенным целым: получает границу, порядок, функцию, выразительность и смысл.</p>
-          <div class="meta">Черно-белая минимальная версия для GitHub Pages · 12-15 минут чтения · обновленный UX/UI</div>
+          <div class="meta">Черно-белая минимальная версия для GitHub Pages · 12-15 минут чтения · версия после доработки 3 экспертов</div>
 
           <div class="quick-actions" aria-label="Быстрые действия">
+            <a href="#expert-review">Что улучшено</a>
             <a href="#method">Перейти к методу</a>
             <a href="#links">Открыть источники</a>
             <button type="button" id="copyButton">Скопировать ссылку</button><span id="copyStatus" aria-live="polite"></span>
@@ -610,18 +626,44 @@
           <div class="reading-card" aria-label="Краткая информация о странице">
             <div><b>Формат</b><span>одностраничная статья без внешних библиотек</span></div>
             <div><b>Задача</b><span>понять форму как философский и проектный принцип</span></div>
-            <div><b>Маршрут</b><span>тезис, спор, практика, метод, источники, манифест</span></div>
+            <div><b>Маршрут</b><span>эксперты, тезис, спор, практика, метод, источники, манифест</span></div>
           </div>
 
-          <div class="expert-grid" aria-label="Пять экспертных фокусов работы">
-            <div><b>Философ</b>смотрит на форму как на условие бытия вещи.</div>
-            <div><b>Методолог</b>требует ясного тезиса и строгой логики.</div>
-            <div><b>Дизайнер</b>проверяет связь формы, функции и образа.</div>
-            <div><b>Инженер</b>видит в форме работающую организацию материала.</div>
-            <div><b>Редактор</b>делает мысль простой без упрощения смысла.</div>
+          <div class="summary-box">
+            <b>Главный ответ в одном абзаце</b>
+            Форма - это не оболочка, а способ организации. Она соединяет материал, структуру, функцию и смысл так, что из набора элементов возникает целое. Поэтому форма важна не только для искусства, но и для инженерии, дизайна, науки, интерфейсов и мышления.
+          </div>
+        </section>
+
+        <section id="expert-review" tabindex="-1" data-title="Экспертная доработка">
+          <div class="section-kicker">Доработка с точки зрения 3 экспертов</div>
+          <h2>0. Экспертная рамка</h2>
+          <p>Эта версия усилена с трех сторон: философская логика, UX/UI для чтения и техническая аккуратность сайта. Цель - чтобы страница была не просто красивой, а понятной, доказательной и удобной.</p>
+
+          <div class="expert-panel" aria-label="Три экспертные позиции">
+            <div class="expert-item">
+              <b>1. Философ-методолог</b>
+              <span>Усилена логика работы: сначала дается главный тезис, затем проблема, контраргумент, синтез и практический метод. Это делает текст дискуссионным, а не просто описательным.</span>
+            </div>
+            <div class="expert-item">
+              <b>2. UX/UI-дизайнер</b>
+              <span>Добавлены быстрые действия, боковая карта чтения, активная навигация, переходы «Дальше», прогресс чтения и понятный первый экран. Читатель сразу понимает, зачем читать и куда идти.</span>
+            </div>
+            <div class="expert-item">
+              <b>3. Фронтенд-разработчик</b>
+              <span>Сохранена автономность одного HTML-файла. Улучшены семантика, адаптивность, печатная версия, доступность с клавиатуры, режим reduced motion и простая JS-логика без тяжелых библиотек.</span>
+            </div>
           </div>
 
-          <div class="toc-box"><b>Как читать эту работу</b>Это не учебник по истории философии и не набор красивых определений. Это короткая авторская система: сначала ставится вопрос о форме, затем разбираются ее уровни, спорные позиции, практическое значение, метод анализа и источники для дальнейшего понимания.</div>
+          <div class="route-grid" aria-label="Маршрут чтения">
+            <div class="route-step"><b>1. Понять</b><span>что такое форма не как внешний вид, а как принцип организации.</span></div>
+            <div class="route-step"><b>2. Сравнить</b><span>позиции: форма реальна или это только удобное слово.</span></div>
+            <div class="route-step"><b>3. Применить</b><span>метод анализа формы к вещи, тексту, проекту или интерфейсу.</span></div>
+            <div class="route-step"><b>4. Закрепить</b><span>идею через манифест, словарь и источники.</span></div>
+          </div>
+
+          <a class="next-link" href="#question"><b>Дальше</b><span>Перейти к главному философскому вопросу.</span><em>Перейти</em></a>
+          <a class="top-link" href="#start">Наверх</a>
         </section>
 
         <section id="question" tabindex="-1" data-title="Главный вопрос">
@@ -836,6 +878,7 @@
       <aside aria-label="Боковая карта чтения">
         <div class="side-card">
           <b>Карта чтения</b>
+          <a href="#expert-review">0. Эксперты</a>
           <a href="#question">1. Главный вопрос</a>
           <a href="#levels">2. Уровни формы</a>
           <a href="#matter">3. Материя и форма</a>
@@ -855,6 +898,12 @@
             <span><strong>12</strong>минут</span>
           </div>
         </div>
+        <div class="side-card">
+          <b>3 экспертных критерия</b>
+          <a href="#expert-review">Ясность тезиса</a>
+          <a href="#expert-review">Удобство чтения</a>
+          <a href="#expert-review">Техническая чистота</a>
+        </div>
       </aside>
     </div>
   </main>
@@ -866,7 +915,7 @@
   </div>
 
   <footer>
-    Авторская дискуссионная работа «Философия формы». Версия подготовлена как минималистичный одностраничный сайт для GitHub Pages. Добавлены ссылки на связанные работы, карта чтения, активная навигация, быстрые действия и улучшенный мобильный режим.
+    Авторская дискуссионная работа «Философия формы». Версия подготовлена как минималистичный одностраничный сайт для GitHub Pages. Доработана с точки зрения трех экспертов: философа-методолога, UX/UI-дизайнера и фронтенд-разработчика.
   </footer>
 
   <script>
