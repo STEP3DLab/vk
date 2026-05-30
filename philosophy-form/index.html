@@ -7,25 +7,18 @@
   <meta name="description" content="Авторская дискуссионная работа о философии формы: форма как способ организации материи, смысла и действия." />
 
   <style>
-    /*
-      Философия формы - минимальный черно-белый сайт.
-      Файл полностью автономный: без библиотек, сборщиков и внешних шрифтов.
-      Можно публиковать на GitHub Pages как index.html.
-    */
-
     :root {
       --bg: #ffffff;
       --text: #111111;
-      --muted: #595959;
+      --muted: #5a5a5a;
       --line: #d8d8d8;
       --soft: #f4f4f4;
       --soft2: #fafafa;
-      --max: 920px;
+      --max: 960px;
       --read: 760px;
     }
 
     * { box-sizing: border-box; }
-
     html { scroll-behavior: smooth; }
 
     body {
@@ -53,8 +46,8 @@
 
     .skip-link {
       position: absolute;
-      left: 20px;
       top: -60px;
+      left: 20px;
       padding: 10px 14px;
       background: var(--text);
       color: var(--bg);
@@ -65,18 +58,14 @@
     }
 
     .skip-link:focus { top: 14px; }
-
-    a:focus-visible, button:focus-visible {
-      outline: 2px solid var(--text);
-      outline-offset: 3px;
-    }
+    a:focus-visible { outline: 2px solid var(--text); outline-offset: 3px; }
 
     header {
-      border-bottom: 1px solid var(--line);
-      background: rgba(255, 255, 255, 0.96);
       position: sticky;
       top: 0;
       z-index: 10;
+      border-bottom: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.96);
       backdrop-filter: blur(8px);
     }
 
@@ -100,7 +89,7 @@
       display: flex;
       flex-wrap: wrap;
       justify-content: flex-end;
-      gap: 10px;
+      gap: 8px;
     }
 
     nav a {
@@ -120,42 +109,38 @@
     }
 
     section {
+      max-width: var(--read);
       padding: 54px 0;
       border-bottom: 1px solid var(--line);
       scroll-margin-top: 84px;
-      max-width: var(--read);
     }
 
-    .hero {
-      max-width: var(--max);
-      padding-top: 8px;
-      padding-bottom: 52px;
-    }
+    .hero { max-width: var(--max); padding-top: 8px; padding-bottom: 52px; }
 
     .label {
+      margin-bottom: 18px;
+      color: var(--muted);
       font-family: Arial, sans-serif;
       font-size: 12px;
       text-transform: uppercase;
       letter-spacing: 0.14em;
-      color: var(--muted);
-      margin-bottom: 18px;
     }
 
     h1 {
+      margin: 0 0 28px;
       font-size: clamp(46px, 8vw, 98px);
       line-height: 0.94;
       font-weight: 400;
       letter-spacing: -0.055em;
-      margin: 0 0 28px;
     }
 
     h2 {
+      max-width: 720px;
+      margin: 0 0 24px;
       font-size: 37px;
       line-height: 1.12;
       font-weight: 400;
       letter-spacing: -0.028em;
-      margin: 0 0 24px;
-      max-width: 720px;
     }
 
     h2::before {
@@ -168,78 +153,92 @@
     }
 
     h3 {
+      margin: 34px 0 12px;
       font-family: Arial, sans-serif;
       font-size: 15px;
       line-height: 1.4;
       text-transform: uppercase;
       letter-spacing: 0.1em;
-      margin: 34px 0 12px;
     }
 
-    p {
-      margin: 0 0 20px;
-      max-width: 72ch;
-    }
-
+    p { max-width: 72ch; margin: 0 0 20px; }
     p + p { margin-top: 2px; }
     section > p:last-child { margin-bottom: 0; }
 
-    .subtitle {
-      max-width: 760px;
-      font-size: 24px;
-      line-height: 1.46;
-      margin: 0;
-    }
+    .subtitle { max-width: 780px; margin: 0; font-size: 24px; line-height: 1.46; }
+    .meta { margin-top: 28px; color: var(--muted); font-family: Arial, sans-serif; font-size: 14px; }
 
-    .meta {
-      margin-top: 28px;
-      font-family: Arial, sans-serif;
-      font-size: 14px;
-      color: var(--muted);
-    }
-
-    .reading-card, .expert-grid, .cards, .scheme, .glossary {
+    .reading-card,
+    .expert-grid,
+    .cards,
+    .scheme,
+    .glossary,
+    .link-grid {
       display: grid;
       gap: 10px;
       font-family: Arial, sans-serif;
     }
 
-    .reading-card {
-      grid-template-columns: repeat(3, 1fr);
-      margin-top: 34px;
-    }
+    .reading-card { grid-template-columns: repeat(3, 1fr); margin-top: 34px; }
+    .expert-grid { grid-template-columns: repeat(5, 1fr); margin-top: 30px; }
+    .cards { grid-template-columns: 1fr 1fr; margin: 28px 0; }
+    .glossary { grid-template-columns: 1fr 1fr; margin: 30px 0 0; }
+    .link-grid { grid-template-columns: 1fr 1fr; margin: 30px 0; }
 
-    .reading-card div, .expert-grid div, .card, .term {
+    .reading-card div,
+    .expert-grid div,
+    .card,
+    .term,
+    .source-link {
       border: 1px solid var(--line);
       padding: 18px;
       background: var(--soft2);
+      transition: transform 0.18s ease, border-color 0.18s ease, background 0.18s ease;
     }
 
-    .reading-card b, .expert-grid b, .card b, .term b {
+    .expert-grid div { border-top: 2px solid var(--text); }
+    .card:hover, .term:hover, .source-link:hover { transform: translateY(-2px); border-color: var(--text); background: #fff; }
+
+    .reading-card b,
+    .expert-grid b,
+    .card b,
+    .term b,
+    .source-link b {
       display: block;
       margin-bottom: 8px;
+      color: var(--text);
       font-size: 13px;
       text-transform: uppercase;
       letter-spacing: 0.09em;
-      color: var(--text);
     }
 
-    .reading-card span, .expert-grid div, .card span, .term span {
+    .reading-card span,
+    .expert-grid div,
+    .card span,
+    .term span,
+    .source-link span {
       color: var(--muted);
       font-size: 15px;
       line-height: 1.55;
     }
 
-    .expert-grid {
-      grid-template-columns: repeat(5, 1fr);
-      margin-top: 30px;
+    .source-link {
+      display: block;
+      color: var(--text);
+      text-decoration: none;
     }
 
-    .expert-grid div {
-      border-top: 2px solid var(--text);
+    .source-link em {
+      display: inline-block;
+      margin-top: 12px;
+      color: var(--text);
+      font-style: normal;
+      font-size: 13px;
+      border-bottom: 1px solid var(--text);
     }
 
-    .toc-box, .formula {
+    .toc-box,
+    .formula {
       margin: 30px 0;
       padding: 24px;
       border: 1px solid var(--line);
@@ -249,7 +248,8 @@
       line-height: 1.6;
     }
 
-    .toc-box b, .formula strong {
+    .toc-box b,
+    .formula strong {
       display: block;
       margin-bottom: 10px;
       font-size: 13px;
@@ -257,7 +257,9 @@
       letter-spacing: 0.1em;
     }
 
-    .lead, .thesis, .quote { font-size: 22px; line-height: 1.52; }
+    .lead,
+    .thesis,
+    .quote { font-size: 22px; line-height: 1.52; }
 
     .thesis {
       margin: 31px 0;
@@ -270,11 +272,11 @@
       content: "Тезис";
       display: block;
       margin-bottom: 10px;
+      color: var(--muted);
       font-family: Arial, sans-serif;
       font-size: 12px;
       text-transform: uppercase;
       letter-spacing: 0.12em;
-      color: var(--muted);
     }
 
     .note {
@@ -288,28 +290,24 @@
       content: "Важно";
       display: block;
       margin-bottom: 8px;
+      color: var(--muted);
       font-family: Arial, sans-serif;
       font-size: 12px;
       text-transform: uppercase;
       letter-spacing: 0.12em;
-      color: var(--muted);
     }
 
-    .quote {
-      margin: 34px 0;
-      padding-left: 24px;
-      border-left: 1px solid var(--text);
-    }
+    .quote { margin: 34px 0; padding-left: 24px; border-left: 1px solid var(--text); }
 
     .scheme { grid-template-columns: repeat(4, 1fr); margin: 34px 0; }
 
     .scheme div {
-      border: 1px solid var(--text);
-      padding: 18px 12px;
       min-height: 104px;
+      padding: 18px 12px;
       display: flex;
       align-items: center;
       justify-content: center;
+      border: 1px solid var(--text);
       text-align: center;
       font-size: 14px;
       line-height: 1.35;
@@ -317,108 +315,27 @@
 
     .scheme .dark { background: var(--text); color: var(--bg); }
 
-    .cards { grid-template-columns: 1fr 1fr; margin: 28px 0; }
-
-    .card, .term { transition: transform 0.18s ease, border-color 0.18s ease; }
-    .card:hover, .term:hover { transform: translateY(-2px); border-color: var(--text); }
-
-    ul { padding-left: 22px; margin: 0 0 22px; }
+    ul { margin: 0 0 22px; padding-left: 22px; }
     li { margin-bottom: 10px; }
 
-    .matrix {
-      margin: 30px 0;
-      border-top: 1px solid var(--text);
-      font-family: Arial, sans-serif;
-    }
-
-    .matrix-row {
-      display: grid;
-      grid-template-columns: 180px 1fr;
-      gap: 20px;
-      padding: 18px 0;
-      border-bottom: 1px solid var(--line);
-    }
-
-    .matrix-row b {
-      font-size: 13px;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-    }
-
+    .matrix { margin: 30px 0; border-top: 1px solid var(--text); font-family: Arial, sans-serif; }
+    .matrix-row { display: grid; grid-template-columns: 180px 1fr; gap: 20px; padding: 18px 0; border-bottom: 1px solid var(--line); }
+    .matrix-row b { font-size: 13px; text-transform: uppercase; letter-spacing: 0.08em; }
     .matrix-row span { color: var(--muted); font-size: 15px; line-height: 1.6; }
 
-    .manifesto {
-      counter-reset: item;
-      margin: 32px 0;
-      border-top: 1px solid var(--text);
-    }
+    .manifesto { counter-reset: item; margin: 32px 0; border-top: 1px solid var(--text); }
+    .manifesto p { counter-increment: item; display: grid; grid-template-columns: 44px 1fr; gap: 16px; padding: 18px 0; margin: 0; border-bottom: 1px solid var(--line); }
+    .manifesto p::before { content: counter(item, decimal-leading-zero); color: var(--muted); font-family: Arial, sans-serif; font-size: 13px; letter-spacing: 0.08em; padding-top: 4px; }
 
-    .manifesto p {
-      counter-increment: item;
-      display: grid;
-      grid-template-columns: 44px 1fr;
-      gap: 16px;
-      padding: 18px 0;
-      margin: 0;
-      border-bottom: 1px solid var(--line);
-    }
-
-    .manifesto p::before {
-      content: counter(item, decimal-leading-zero);
-      font-family: Arial, sans-serif;
-      font-size: 13px;
-      letter-spacing: 0.08em;
-      color: var(--muted);
-      padding-top: 4px;
-    }
-
-    .glossary { grid-template-columns: 1fr 1fr; margin: 30px 0 0; }
-
-    .final {
-      padding: 34px;
-      background: var(--text);
-      color: var(--bg);
-      margin-top: 36px;
-    }
-
-    .final::before {
-      content: "Финальная формула";
-      display: block;
-      margin-bottom: 12px;
-      font-family: Arial, sans-serif;
-      font-size: 12px;
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-      color: #d7d7d7;
-    }
-
+    .final { margin-top: 36px; padding: 34px; background: var(--text); color: var(--bg); }
+    .final::before { content: "Финальная формула"; display: block; margin-bottom: 12px; color: #d7d7d7; font-family: Arial, sans-serif; font-size: 12px; text-transform: uppercase; letter-spacing: 0.12em; }
     .final p { margin-bottom: 0; font-size: 24px; line-height: 1.46; }
 
-    .top-link {
-      display: inline-block;
-      margin-top: 24px;
-      font-family: Arial, sans-serif;
-      font-size: 13px;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: var(--text);
-      text-decoration: none;
-      border-bottom: 1px solid var(--text);
-    }
+    .top-link { display: inline-block; margin-top: 24px; color: var(--text); font-family: Arial, sans-serif; font-size: 13px; text-transform: uppercase; letter-spacing: 0.08em; text-decoration: none; border-bottom: 1px solid var(--text); }
 
-    footer {
-      max-width: var(--max);
-      margin: 0 auto;
-      padding: 34px 20px 66px;
-      font-family: Arial, sans-serif;
-      color: var(--muted);
-      font-size: 13px;
-      line-height: 1.58;
-    }
+    footer { max-width: var(--max); margin: 0 auto; padding: 34px 20px 66px; color: var(--muted); font-family: Arial, sans-serif; font-size: 13px; line-height: 1.58; }
 
-    @media (max-width: 860px) {
-      .expert-grid { grid-template-columns: 1fr 1fr; }
-    }
+    @media (max-width: 860px) { .expert-grid { grid-template-columns: 1fr 1fr; } }
 
     @media (max-width: 760px) {
       body { font-size: 17px; }
@@ -429,7 +346,7 @@
       main { padding-top: 38px; }
       h2 { font-size: 32px; }
       .subtitle, .lead, .thesis, .quote, .final p { font-size: 20px; }
-      .scheme, .cards, .expert-grid, .glossary, .reading-card { grid-template-columns: 1fr; }
+      .scheme, .cards, .expert-grid, .glossary, .reading-card, .link-grid { grid-template-columns: 1fr; }
       .matrix-row, .manifesto p { grid-template-columns: 1fr; gap: 8px; }
     }
 
@@ -443,7 +360,7 @@
       body { font-size: 12pt; line-height: 1.55; }
       main { max-width: none; padding: 0; }
       section { page-break-inside: avoid; border-bottom: 1px solid #999; }
-      .card, .term, .formula, .toc-box, .note, .thesis { background: #fff !important; }
+      .card, .term, .formula, .toc-box, .note, .thesis, .source-link { background: #fff !important; }
     }
   </style>
 </head>
@@ -463,6 +380,7 @@
         <a href="#debate">Спор</a>
         <a href="#practice">Практика</a>
         <a href="#method">Метод</a>
+        <a href="#links">Ссылки</a>
         <a href="#manifesto">Манифест</a>
         <a href="#conclusion">Вывод</a>
       </nav>
@@ -480,7 +398,7 @@
         <div class="reading-card" aria-label="Краткая информация о странице">
           <div><b>Формат</b><span>одностраничная статья без внешних библиотек</span></div>
           <div><b>Задача</b><span>понять форму как философский и проектный принцип</span></div>
-          <div><b>Маршрут</b><span>тезис, спор, практика, метод, манифест</span></div>
+          <div><b>Маршрут</b><span>тезис, спор, практика, метод, источники, манифест</span></div>
         </div>
 
         <div class="expert-grid" aria-label="Пять экспертных фокусов работы">
@@ -491,7 +409,7 @@
           <div><b>Редактор</b>делает мысль простой без упрощения смысла.</div>
         </div>
 
-        <div class="toc-box"><b>Как читать эту работу</b>Это не учебник по истории философии и не набор красивых определений. Это короткая авторская система: сначала ставится вопрос о форме, затем разбираются ее уровни, спорные позиции, практическое значение и метод анализа любой вещи через форму.</div>
+        <div class="toc-box"><b>Как читать эту работу</b>Это не учебник по истории философии и не набор красивых определений. Это короткая авторская система: сначала ставится вопрос о форме, затем разбираются ее уровни, спорные позиции, практическое значение, метод анализа и источники для дальнейшего понимания.</div>
       </section>
 
       <section id="question" tabindex="-1">
@@ -616,8 +534,29 @@
         <a class="top-link" href="#start">Наверх</a>
       </section>
 
+      <section id="links" tabindex="-1">
+        <h2>11. Связанные работы и источники</h2>
+        <p>Этот блок нужен, чтобы не оставлять текст в пустоте. Ниже - материалы, которые помогают понять, откуда берется разговор о форме, материи, структуре, опыте и проектировании.</p>
+
+        <div class="link-grid" aria-label="Ссылки на связанные работы">
+          <a class="source-link" href="https://plato.stanford.edu/entries/aristotle-metaphysics/" target="_blank" rel="noopener noreferrer"><b>Аристотель и метафизика</b><span>Форма, материя, сущность и вопрос о том, почему вещь является тем, чем она является.</span><em>Открыть</em></a>
+          <a class="source-link" href="https://plato.stanford.edu/entries/plato-metaphysics/" target="_blank" rel="noopener noreferrer"><b>Платон и идеи</b><span>Контекст для понимания формы как устойчивой меры изменчивых вещей.</span><em>Открыть</em></a>
+          <a class="source-link" href="https://plato.stanford.edu/entries/kant-transcendental-idealism/" target="_blank" rel="noopener noreferrer"><b>Кант и опыт</b><span>Форма не только в вещи, но и в способе человеческого восприятия и познания.</span><em>Открыть</em></a>
+          <a class="source-link" href="https://plato.stanford.edu/entries/hegel/" target="_blank" rel="noopener noreferrer"><b>Гегель</b><span>Форма и содержание как развивающееся единство, а не внешнее соединение.</span><em>Открыть</em></a>
+          <a class="source-link" href="https://plato.stanford.edu/entries/structural-realism/" target="_blank" rel="noopener noreferrer"><b>Структура</b><span>Современный философский язык для разговора о форме как системе отношений.</span><em>Открыть</em></a>
+          <a class="source-link" href="https://plato.stanford.edu/entries/scientific-models/" target="_blank" rel="noopener noreferrer"><b>Модели в науке</b><span>Как форма мышления превращается в модель, объяснение и инструмент исследования.</span><em>Открыть</em></a>
+          <a class="source-link" href="https://www.gutenberg.org/ebooks/1497" target="_blank" rel="noopener noreferrer"><b>Платон - Государство</b><span>Классический текст о порядке, идее, устройстве души и устройстве полиса.</span><em>Открыть</em></a>
+          <a class="source-link" href="https://www.gutenberg.org/ebooks/26095" target="_blank" rel="noopener noreferrer"><b>Аристотель - Метафизика</b><span>Источник для темы формы, материи, сущности и причины.</span><em>Открыть</em></a>
+          <a class="source-link" href="https://www.gutenberg.org/ebooks/4280" target="_blank" rel="noopener noreferrer"><b>Кант - Критика чистого разума</b><span>Текст, где форма связана с условиями опыта и возможностью знания.</span><em>Открыть</em></a>
+          <a class="source-link" href="https://www.gutenberg.org/ebooks/57433" target="_blank" rel="noopener noreferrer"><b>Гегель - Наука логики</b><span>Работа для понимания связи формы, содержания, понятия и развития.</span><em>Открыть</em></a>
+        </div>
+
+        <div class="note">Ссылки открываются в новой вкладке. Они оставлены не для украшения, а как маршрут: от античной идеи формы через Канта и Гегеля к современной теме структуры, моделей и проектного мышления.</div>
+        <a class="top-link" href="#start">Наверх</a>
+      </section>
+
       <section id="manifesto" tabindex="-1">
-        <h2>11. Манифест формы</h2>
+        <h2>12. Манифест формы</h2>
         <p>Если свести всю работу к коротким положениям, получится манифест. Он нужен не как догма, а как набор ориентиров для мышления, проектирования и критики.</p>
         <div class="manifesto">
           <p>Форма не украшает вещь после ее появления. Она участвует в самом появлении вещи.</p>
@@ -632,7 +571,7 @@
       </section>
 
       <section>
-        <h2>12. Короткий словарь</h2>
+        <h2>13. Короткий словарь</h2>
         <p>Чтобы текст было проще обсуждать, основные понятия можно зафиксировать в коротком словаре. Эти определения не закрывают тему, но задают рабочий язык.</p>
         <div class="glossary">
           <div class="term"><b>Форма</b><span>Способ организации, благодаря которому материал становится определенным целым.</span></div>
@@ -646,35 +585,21 @@
       </section>
 
       <section id="conclusion" tabindex="-1">
-        <h2>13. Вывод</h2>
+        <h2>14. Вывод</h2>
         <p>Форма кажется очевидной, пока мы понимаем ее только как внешний вид. Но как только мы начинаем думать глубже, она становится одним из главных понятий философии.</p>
         <p>Форма не обязана существовать отдельно от предмета, чтобы быть реальной. Она реальна как организация предмета. Она не заменяет материю, но делает материю определенной. Она не отменяет содержание, но позволяет содержанию проявиться.</p>
         <p>В эпоху сложных технологий, цифровых сред, искусственного интеллекта и проектной культуры философия формы становится особенно важной. Будущее создается не только новыми материалами и данными. Будущее создается новыми способами организации.</p>
         <div class="final"><p>Форма - это момент, когда возможность получает устройство, устройство становится действием, а действие открывает смысл.</p></div>
         <a class="top-link" href="#start">Наверх</a>
       </section>
-
-      <section>
-        <h2>Для дальнейшего чтения</h2>
-        <ul>
-          <li>Платон - идея формы как устойчивой меры изменчивых вещей.</li>
-          <li>Аристотель - форма как сущность вещи и принцип ее определенности.</li>
-          <li>Кант - формы чувственности и условия человеческого опыта.</li>
-          <li>Гегель - развитие формы и содержания как единого процесса.</li>
-          <li>Феноменология - форма как способ явления смысла в опыте.</li>
-          <li>Структурализм - смысл как результат отношений внутри системы.</li>
-          <li>Современная философия науки - структура, модель, паттерн и объяснение.</li>
-        </ul>
-      </section>
     </article>
   </main>
 
   <footer>
-    Авторская дискуссионная работа «Философия формы». Версия подготовлена как минималистичный одностраничный сайт для GitHub Pages.
+    Авторская дискуссионная работа «Философия формы». Версия подготовлена как минималистичный одностраничный сайт для GitHub Pages. Добавлены ссылки на связанные работы и источники для понимания темы.
   </footer>
 
   <script>
-    // Минимальный JS: обновляет тонкую полосу прогресса чтения.
     const progress = document.getElementById('progress');
 
     function updateProgress() {
