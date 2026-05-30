@@ -14,8 +14,10 @@
       --line: #d8d8d8;
       --soft: #f4f4f4;
       --soft2: #fafafa;
-      --max: 960px;
+      --max: 1160px;
       --read: 760px;
+      --side: 260px;
+      --radius: 0px;
     }
 
     * { box-sizing: border-box; }
@@ -58,7 +60,7 @@
     }
 
     .skip-link:focus { top: 14px; }
-    a:focus-visible { outline: 2px solid var(--text); outline-offset: 3px; }
+    a:focus-visible, button:focus-visible { outline: 2px solid var(--text); outline-offset: 3px; }
 
     header {
       position: sticky;
@@ -72,7 +74,7 @@
     .topbar {
       max-width: var(--max);
       margin: 0 auto;
-      padding: 15px 20px;
+      padding: 14px 20px;
       display: flex;
       justify-content: space-between;
       gap: 20px;
@@ -100,12 +102,111 @@
       transition: background 0.18s ease, border-color 0.18s ease;
     }
 
-    nav a:hover { border-color: var(--line); background: var(--soft2); }
+    nav a:hover,
+    nav a.active { border-color: var(--text); background: var(--soft2); }
+
+    .mobile-contents {
+      display: none;
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 0 20px 12px;
+      font-family: Arial, sans-serif;
+    }
+
+    .mobile-contents details {
+      border: 1px solid var(--line);
+      background: var(--soft2);
+      padding: 12px;
+    }
+
+    .mobile-contents summary {
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .mobile-contents a {
+      display: block;
+      color: var(--text);
+      text-decoration: none;
+      padding: 9px 0;
+      border-bottom: 1px solid var(--line);
+      font-size: 14px;
+    }
 
     main {
       max-width: var(--max);
       margin: 0 auto;
       padding: 56px 20px 86px;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(0, var(--read)) var(--side);
+      gap: 72px;
+      align-items: start;
+    }
+
+    article { min-width: 0; }
+
+    aside {
+      position: sticky;
+      top: 74px;
+      font-family: Arial, sans-serif;
+      font-size: 14px;
+    }
+
+    .side-card {
+      border: 1px solid var(--line);
+      background: var(--soft2);
+      padding: 18px;
+      margin-bottom: 14px;
+    }
+
+    .side-card b {
+      display: block;
+      margin-bottom: 10px;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    .side-card a {
+      display: block;
+      color: var(--muted);
+      text-decoration: none;
+      padding: 7px 0;
+      border-bottom: 1px solid var(--line);
+      line-height: 1.35;
+    }
+
+    .side-card a:hover,
+    .side-card a.active { color: var(--text); }
+
+    .read-meter {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .read-meter span {
+      border: 1px solid var(--line);
+      padding: 10px;
+      background: #fff;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.35;
+    }
+
+    .read-meter strong {
+      display: block;
+      color: var(--text);
+      font-size: 18px;
+      line-height: 1.1;
+      margin-bottom: 2px;
     }
 
     section {
@@ -115,9 +216,10 @@
       scroll-margin-top: 84px;
     }
 
-    .hero { max-width: var(--max); padding-top: 8px; padding-bottom: 52px; }
+    .hero { max-width: var(--read); padding-top: 8px; padding-bottom: 52px; }
 
-    .label {
+    .label,
+    .section-kicker {
       margin-bottom: 18px;
       color: var(--muted);
       font-family: Arial, sans-serif;
@@ -125,6 +227,8 @@
       text-transform: uppercase;
       letter-spacing: 0.14em;
     }
+
+    .section-kicker { margin-bottom: 10px; }
 
     h1 {
       margin: 0 0 28px;
@@ -168,6 +272,31 @@
     .subtitle { max-width: 780px; margin: 0; font-size: 24px; line-height: 1.46; }
     .meta { margin-top: 28px; color: var(--muted); font-family: Arial, sans-serif; font-size: 14px; }
 
+    .quick-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 26px;
+      font-family: Arial, sans-serif;
+    }
+
+    .quick-actions a,
+    .quick-actions button {
+      border: 1px solid var(--text);
+      background: #fff;
+      color: var(--text);
+      padding: 9px 12px;
+      font: inherit;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .quick-actions a:hover,
+    .quick-actions button:hover { background: var(--text); color: var(--bg); }
+
     .reading-card,
     .expert-grid,
     .cards,
@@ -189,7 +318,8 @@
     .expert-grid div,
     .card,
     .term,
-    .source-link {
+    .source-link,
+    .next-link {
       border: 1px solid var(--line);
       padding: 18px;
       background: var(--soft2);
@@ -197,13 +327,22 @@
     }
 
     .expert-grid div { border-top: 2px solid var(--text); }
-    .card:hover, .term:hover, .source-link:hover { transform: translateY(-2px); border-color: var(--text); background: #fff; }
+
+    .card:hover,
+    .term:hover,
+    .source-link:hover,
+    .next-link:hover {
+      transform: translateY(-2px);
+      border-color: var(--text);
+      background: #fff;
+    }
 
     .reading-card b,
     .expert-grid b,
     .card b,
     .term b,
-    .source-link b {
+    .source-link b,
+    .next-link b {
       display: block;
       margin-bottom: 8px;
       color: var(--text);
@@ -216,19 +355,22 @@
     .expert-grid div,
     .card span,
     .term span,
-    .source-link span {
+    .source-link span,
+    .next-link span {
       color: var(--muted);
       font-size: 15px;
       line-height: 1.55;
     }
 
-    .source-link {
+    .source-link,
+    .next-link {
       display: block;
       color: var(--text);
       text-decoration: none;
     }
 
-    .source-link em {
+    .source-link em,
+    .next-link em {
       display: inline-block;
       margin-top: 12px;
       color: var(--text);
@@ -333,9 +475,54 @@
 
     .top-link { display: inline-block; margin-top: 24px; color: var(--text); font-family: Arial, sans-serif; font-size: 13px; text-transform: uppercase; letter-spacing: 0.08em; text-decoration: none; border-bottom: 1px solid var(--text); }
 
+    .floating-tools {
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      display: grid;
+      gap: 8px;
+      z-index: 20;
+      font-family: Arial, sans-serif;
+    }
+
+    .floating-tools a,
+    .floating-tools button {
+      width: 44px;
+      height: 44px;
+      border: 1px solid var(--text);
+      background: #fff;
+      color: var(--text);
+      display: grid;
+      place-items: center;
+      text-decoration: none;
+      font-size: 12px;
+      cursor: pointer;
+    }
+
+    .floating-tools a:hover,
+    .floating-tools button:hover { background: var(--text); color: var(--bg); }
+
+    #copyStatus {
+      display: inline-block;
+      margin-left: 8px;
+      color: var(--muted);
+      font-size: 13px;
+      text-transform: none;
+      letter-spacing: 0;
+    }
+
     footer { max-width: var(--max); margin: 0 auto; padding: 34px 20px 66px; color: var(--muted); font-family: Arial, sans-serif; font-size: 13px; line-height: 1.58; }
 
-    @media (max-width: 860px) { .expert-grid { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 1080px) {
+      .layout { grid-template-columns: 1fr; gap: 0; }
+      aside { display: none; }
+      main { max-width: 860px; }
+    }
+
+    @media (max-width: 860px) {
+      .expert-grid { grid-template-columns: 1fr 1fr; }
+      .mobile-contents { display: block; }
+    }
 
     @media (max-width: 760px) {
       body { font-size: 17px; }
@@ -348,6 +535,8 @@
       .subtitle, .lead, .thesis, .quote, .final p { font-size: 20px; }
       .scheme, .cards, .expert-grid, .glossary, .reading-card, .link-grid { grid-template-columns: 1fr; }
       .matrix-row, .manifesto p { grid-template-columns: 1fr; gap: 8px; }
+      .floating-tools { right: 12px; bottom: 12px; }
+      .floating-tools a, .floating-tools button { width: 40px; height: 40px; }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -356,11 +545,12 @@
     }
 
     @media print {
-      header, .progress, .skip-link, .top-link { display: none !important; }
+      header, aside, .progress, .skip-link, .top-link, .floating-tools, .quick-actions, .mobile-contents { display: none !important; }
       body { font-size: 12pt; line-height: 1.55; }
       main { max-width: none; padding: 0; }
+      .layout { display: block; }
       section { page-break-inside: avoid; border-bottom: 1px solid #999; }
-      .card, .term, .formula, .toc-box, .note, .thesis, .source-link { background: #fff !important; }
+      .card, .term, .formula, .toc-box, .note, .thesis, .source-link, .next-link { background: #fff !important; }
     }
   </style>
 </head>
@@ -385,233 +575,345 @@
         <a href="#conclusion">Вывод</a>
       </nav>
     </div>
+    <div class="mobile-contents">
+      <details>
+        <summary>Карта чтения</summary>
+        <a href="#question">1. Главный вопрос</a>
+        <a href="#levels">2. Четыре уровня формы</a>
+        <a href="#history">4. История идеи формы</a>
+        <a href="#debate">5. Главная дискуссия</a>
+        <a href="#practice">7. Практическое значение</a>
+        <a href="#method">10. Метод анализа</a>
+        <a href="#links">11. Источники</a>
+        <a href="#manifesto">12. Манифест</a>
+        <a href="#conclusion">14. Вывод</a>
+      </details>
+    </div>
   </header>
 
   <main>
-    <article>
-      <section class="hero" id="start">
-        <div class="label">Дискуссионная работа для чтения</div>
-        <h1>Философия формы</h1>
-        <p class="subtitle">Форма - это не только внешний вид вещи. Это способ, благодаря которому материал становится определенным целым: получает границу, порядок, функцию, выразительность и смысл.</p>
-        <div class="meta">Черно-белая минимальная версия для GitHub Pages · 12-15 минут чтения</div>
+    <div class="layout">
+      <article>
+        <section class="hero" id="start">
+          <div class="label">Дискуссионная работа для чтения</div>
+          <h1>Философия формы</h1>
+          <p class="subtitle">Форма - это не только внешний вид вещи. Это способ, благодаря которому материал становится определенным целым: получает границу, порядок, функцию, выразительность и смысл.</p>
+          <div class="meta">Черно-белая минимальная версия для GitHub Pages · 12-15 минут чтения · обновленный UX/UI</div>
 
-        <div class="reading-card" aria-label="Краткая информация о странице">
-          <div><b>Формат</b><span>одностраничная статья без внешних библиотек</span></div>
-          <div><b>Задача</b><span>понять форму как философский и проектный принцип</span></div>
-          <div><b>Маршрут</b><span>тезис, спор, практика, метод, источники, манифест</span></div>
+          <div class="quick-actions" aria-label="Быстрые действия">
+            <a href="#method">Перейти к методу</a>
+            <a href="#links">Открыть источники</a>
+            <button type="button" id="copyButton">Скопировать ссылку</button><span id="copyStatus" aria-live="polite"></span>
+            <button type="button" onclick="window.print()">Печать / PDF</button>
+          </div>
+
+          <div class="reading-card" aria-label="Краткая информация о странице">
+            <div><b>Формат</b><span>одностраничная статья без внешних библиотек</span></div>
+            <div><b>Задача</b><span>понять форму как философский и проектный принцип</span></div>
+            <div><b>Маршрут</b><span>тезис, спор, практика, метод, источники, манифест</span></div>
+          </div>
+
+          <div class="expert-grid" aria-label="Пять экспертных фокусов работы">
+            <div><b>Философ</b>смотрит на форму как на условие бытия вещи.</div>
+            <div><b>Методолог</b>требует ясного тезиса и строгой логики.</div>
+            <div><b>Дизайнер</b>проверяет связь формы, функции и образа.</div>
+            <div><b>Инженер</b>видит в форме работающую организацию материала.</div>
+            <div><b>Редактор</b>делает мысль простой без упрощения смысла.</div>
+          </div>
+
+          <div class="toc-box"><b>Как читать эту работу</b>Это не учебник по истории философии и не набор красивых определений. Это короткая авторская система: сначала ставится вопрос о форме, затем разбираются ее уровни, спорные позиции, практическое значение, метод анализа и источники для дальнейшего понимания.</div>
+        </section>
+
+        <section id="question" tabindex="-1" data-title="Главный вопрос">
+          <div class="section-kicker">Постановка проблемы</div>
+          <h2>1. Главный вопрос</h2>
+          <p class="lead">Мы часто воспринимаем форму как оболочку: линию, силуэт, внешний вид. Но стоит задать один простой вопрос, и тема становится философской: почему вещь является именно этой вещью, а не случайной суммой материала?</p>
+          <p>Один и тот же материал может стать разными предметами. Глина может стать кирпичом, сосудом, статуей или комом. Металл может стать мостом, ножом, скрепкой или музыкальным инструментом. Буквы могут стать шумом, инструкцией, признанием или стихотворением. Во всех случаях материал важен, но он не объясняет целого полностью.</p>
+          <p>Чтобы вещь возникла, материал должен быть организован. Должны появиться граница, порядок, внутренние связи и назначение. Именно этот способ организации мы называем формой в сильном смысле слова.</p>
+          <div class="thesis">Форма - это не украшение материала. Форма - это способ, которым материал становится вещью, а вещь становится носителем смысла.</div>
+          <p>Поэтому философия формы начинается не с вопроса о красоте, а с вопроса об определенности. Почему куча камней еще не дом? Почему набор деталей еще не механизм? Почему тело не сводится к химическому составу? Почему текст больше суммы слов? Ответ во всех случаях связан с формой.</p>
+          <a class="next-link" href="#levels"><b>Дальше</b><span>Разобрать четыре уровня формы: образ, структура, функция, смысл.</span><em>Перейти</em></a>
+          <a class="top-link" href="#start">Наверх</a>
+        </section>
+
+        <section id="levels" tabindex="-1" data-title="Уровни формы">
+          <div class="section-kicker">Опорная схема</div>
+          <h2>2. Четыре уровня формы</h2>
+          <p>Ошибка начинается тогда, когда форму сводят только к внешности. В действительности форма работает сразу на нескольких уровнях. Она может быть видимой, но не сводится к видимости. Она может быть измеримой, но не исчерпывается размером. Она может быть красивой, но не обязана быть только украшением.</p>
+          <div class="scheme" aria-label="Четыре уровня формы">
+            <div>Образ<br />то, как вещь является</div>
+            <div>Структура<br />как связаны части</div>
+            <div>Функция<br />как вещь действует</div>
+            <div class="dark">Смысл<br />почему это целое</div>
+          </div>
+          <p>Первый уровень - образ. Это то, что мы видим сразу: контур, пропорция, масса, ритм, поверхность. Через образ вещь входит в восприятие.</p>
+          <p>Второй уровень - структура. Здесь форма уже не просто видна, а организует части. Дом отличается от груды кирпичей не количеством материала, а связью элементов.</p>
+          <p>Третий уровень - функция. Форма показывает, что вещь умеет делать. Стул рассчитан на сидение, ручка двери - на захват, мост - на переход, интерфейсная кнопка - на действие.</p>
+          <p>Четвертый уровень - смысл. На этом уровне форма отвечает не только на вопрос «как устроено?», но и на вопрос «зачем это существует?».</p>
+          <div class="formula"><strong>Рабочая формула</strong>Материя дает возможность. Структура дает устойчивость. Функция дает действие. Смысл дает направление. Форма соединяет эти уровни в одно целое.</div>
+          <a class="next-link" href="#matter"><b>Дальше</b><span>Понять, как связаны материя и форма.</span><em>Перейти</em></a>
+          <a class="top-link" href="#start">Наверх</a>
+        </section>
+
+        <section id="matter" data-title="Материя и форма">
+          <div class="section-kicker">Классическая пара</div>
+          <h2>3. Материя и форма</h2>
+          <p>Классическая философская пара - материя и форма. Материя отвечает на вопрос «из чего?». Форма отвечает на вопрос «как это стало именно этим?». Но эта пара не должна пониматься как борьба двух чужих начал. Вещь возникает не из одной материи и не из одной формы, а из их соединения.</p>
+          <p>Материя без формы остается возможностью. Это запас, ресурс, потенциал. Форма без материи остается схемой, замыслом или образом. Только вместе они дают конкретную вещь.</p>
+          <p>В этом смысле форма не находится «снаружи» вещи. Она не наклеивается на предмет после его создания. Она действует изнутри как принцип собранности. Если форма уничтожена, вещь может физически сохранять материал, но перестает быть прежним целым.</p>
+          <div class="quote">Форма - это не оболочка вещи. Это дисциплина, благодаря которой вещь держится как целое.</div>
+          <a class="next-link" href="#history"><b>Дальше</b><span>Проследить путь идеи формы от Платона до современности.</span><em>Перейти</em></a>
+          <a class="top-link" href="#start">Наверх</a>
+        </section>
+
+        <section id="history" tabindex="-1" data-title="История">
+          <div class="section-kicker">Исторический маршрут</div>
+          <h2>4. Краткая история идеи формы</h2>
+          <p>У Платона форма связана с идеей. Вещи чувственного мира меняются, стареют и исчезают, но за ними мыслится устойчивый образ. Без устойчивых форм невозможно ни познание, ни оценка, ни сравнение.</p>
+          <p>Аристотель делает решающий поворот. Он помещает форму не в отдельный мир, а внутрь самой вещи. Форма - это то, благодаря чему вещь есть то, что она есть.</p>
+          <p>Позже тема формы меняет направление. В Средние века она связывается с сущностью вещи. У Канта форма становится условием опыта. У Гегеля форма и содержание рассматриваются в развитии. В XX веке структурализм и феноменология показывают, что смысл рождается не только из элементов, но и из отношений.</p>
+          <div class="scheme" aria-label="Историческая траектория идеи формы">
+            <div>Платон<br />форма как идея</div>
+            <div>Аристотель<br />форма как сущность</div>
+            <div>Кант<br />форма как условие опыта</div>
+            <div class="dark">Современность<br />форма как структура</div>
+          </div>
+          <p>Сегодня мы часто говорим не «форма», а структура, модель, паттерн, архитектура, система, интерфейс, композиция, алгоритм. Но вопрос остается тем же: как элементы становятся целым?</p>
+          <a class="next-link" href="#debate"><b>Дальше</b><span>Перейти к главному спору: форма реальна или придумана?</span><em>Перейти</em></a>
+          <a class="top-link" href="#start">Наверх</a>
+        </section>
+
+        <section id="debate" tabindex="-1" data-title="Спор">
+          <div class="section-kicker">Дискуссионный узел</div>
+          <h2>5. Дискуссия: форма реальна или придумана?</h2>
+          <p>Главный спор можно сформулировать так: форма существует реально или это только удобное слово, которым мы называем расположение частей?</p>
+          <div class="cards">
+            <div class="card"><b>Аргумент за реальность формы</b><span>Без формы нельзя объяснить целое. Дом - не просто кирпичи. Организм - не просто клетки. Текст - не просто слова. Механизм - не просто детали.</span></div>
+            <div class="card"><b>Аргумент против</b><span>Если сделать форму отдельной сущностью, мы рискуем удвоить мир. Тогда форма становится туманным объяснением вместо точного анализа.</span></div>
+          </div>
+          <p>Первая позиция защищает целостность. Она говорит: мир состоит не только из частиц, деталей и элементов. Он состоит из организованных целых.</p>
+          <p>Вторая позиция защищает строгость. Она предупреждает: нельзя превращать форму в магическое слово. Если мы говорим «форма объясняет», но не показываем, как именно организованы части, мы ничего не объяснили.</p>
+          <div class="thesis">Форма реальна не как отдельная вещь рядом с предметом, а как порядок, благодаря которому предмет существует как предмет.</div>
+          <a class="next-link" href="#content"><b>Дальше</b><span>Разобрать, почему спор формы и содержания часто поставлен неправильно.</span><em>Перейти</em></a>
+          <a class="top-link" href="#start">Наверх</a>
+        </section>
+
+        <section id="content" data-title="Форма и содержание">
+          <div class="section-kicker">Ложная оппозиция</div>
+          <h2>6. Форма и содержание: ложная война</h2>
+          <p>В культуре часто говорят: «Главное - содержание, а форма вторична». Это звучит убедительно, но только до тех пор, пока мы не спросим: как содержание вообще становится доступным?</p>
+          <p>Содержание без формы не может быть выражено. Мысль должна стать фразой. Музыкальное чувство - ритмом и звучанием. Инженерный замысел - чертежом, геометрией, технологией.</p>
+          <p>Но и форма без содержания опасна. Она становится пустым стилем, эффектом, оболочкой без необходимости. В дизайне это приводит к красивой, но неудобной вещи. В науке - к сложной, но пустой схеме. В управлении - к регламенту без дела.</p>
+          <p>Форма и содержание не враги. Содержание ищет форму, чтобы проявиться. Форма требует содержания, чтобы быть необходимой.</p>
+          <a class="next-link" href="#practice"><b>Дальше</b><span>Посмотреть, зачем философия формы нужна сегодня.</span><em>Перейти</em></a>
+          <a class="top-link" href="#start">Наверх</a>
+        </section>
+
+        <section id="practice" tabindex="-1" data-title="Практика">
+          <div class="section-kicker">Применение</div>
+          <h2>7. Почему это важно сегодня</h2>
+          <p>Философия формы важна не только для истории философии. Она нужна там, где человек создает, проектирует, объясняет и организует.</p>
+          <h3>Дизайн</h3>
+          <p>В дизайне форма соединяет образ, пользу и поведение. Хорошая ручка двери уже показывает, как ее взять. Хорошая кнопка в интерфейсе уже сообщает, что с ней можно сделать.</p>
+          <h3>Архитектура</h3>
+          <p>В архитектуре форма организует пространство жизни: сценарий движения, режим света, отношение частного и общего, чувство открытости или защищенности.</p>
+          <h3>Инженерия</h3>
+          <p>В инженерии форма становится условием работы. Деталь должна выдерживать нагрузку, изготавливаться выбранной технологией, собираться с другими деталями и выполнять функцию.</p>
+          <h3>Биология</h3>
+          <p>В живой природе форма не просто сделана, а выращена. Кость, лист, крыло, глаз или рука показывают, как структура связана с развитием, средой и функцией.</p>
+          <h3>Искусственный интеллект</h3>
+          <p>В искусственном интеллекте вопрос формы возвращается как вопрос структуры данных и отношений. Лицо - это не набор пикселей. Текст - не набор токенов. Поведение - не один сигнал.</p>
+          <div class="note">Философия формы может стать мостом между гуманитарным и техническим мышлением. Она одинаково важна художнику, инженеру, архитектору, исследователю, программисту и преподавателю.</div>
+          <a class="next-link" href="#risks"><b>Дальше</b><span>Увидеть две ошибки: формализм и редукционизм.</span><em>Перейти</em></a>
+          <a class="top-link" href="#start">Наверх</a>
+        </section>
+
+        <section id="risks" data-title="Опасности">
+          <div class="section-kicker">Критика</div>
+          <h2>8. Опасности неправильного понимания формы</h2>
+          <p>Первая крайность - формализм. В этом случае форма отрывается от содержания, функции и жизни. Она превращается в стиль ради стиля. Такая форма может быть эффектной, но она не необходима.</p>
+          <p>Вторая крайность - грубый редукционизм. В этом случае форму считают чем-то вторичным и пытаются объяснить все только материалом или отдельными элементами. Но тогда исчезает целое.</p>
+          <p>Зрелое понимание формы держит баланс. Оно не превращает форму в мистику и не уничтожает ее в наборе частей. Оно видит форму как рабочую организацию.</p>
+          <a class="next-link" href="#author"><b>Дальше</b><span>Сформулировать авторский тезис.</span><em>Перейти</em></a>
+          <a class="top-link" href="#start">Наверх</a>
+        </section>
+
+        <section id="author" data-title="Авторский тезис">
+          <div class="section-kicker">Авторская позиция</div>
+          <h2>9. Авторский тезис</h2>
+          <p>Философию формы можно определить как учение о возникновении собранности. Мир полон материи, энергии, слов, изображений, данных и жестов. Но не всякая совокупность становится вещью.</p>
+          <p>Форма появляется там, где хаос получает границу, а граница не просто отделяет, но организует. Форма - это не только край вещи. Это ее внутренняя дисциплина.</p>
+          <div class="thesis">Форма - это событие проявления. Содержание становится видимым только тогда, когда находит свою форму.</div>
+          <p>Создавать форму - значит не украшать готовое, а мыслить через устройство. Дизайнер, инженер, писатель, архитектор, художник и философ занимаются родственным делом: они ищут такую организацию материала, при которой вещь становится точной.</p>
+          <a class="next-link" href="#method"><b>Дальше</b><span>Превратить философию формы в метод анализа.</span><em>Перейти</em></a>
+          <a class="top-link" href="#start">Наверх</a>
+        </section>
+
+        <section id="method" tabindex="-1" data-title="Метод анализа">
+          <div class="section-kicker">Практический инструмент</div>
+          <h2>10. Метод анализа формы</h2>
+          <p>Чтобы философия формы не осталась абстрактным рассуждением, ее можно превратить в метод. Любую вещь, проект, текст, интерфейс, здание или техническую деталь можно анализировать через несколько вопросов.</p>
+          <div class="matrix" aria-label="Метод анализа формы">
+            <div class="matrix-row"><b>Граница</b><span>Где вещь начинается и заканчивается? Что отделяет ее от среды, шума, случайности и лишнего?</span></div>
+            <div class="matrix-row"><b>Структура</b><span>Как связаны части? Есть ли порядок, иерархия, ритм, повтор, симметрия, напряжение или центр?</span></div>
+            <div class="matrix-row"><b>Функция</b><span>Что эта форма позволяет делать? Как она направляет действие человека, материала или системы?</span></div>
+            <div class="matrix-row"><b>Материал</b><span>Соответствует ли форма веществу, технологии, прочности, масштабу и способу изготовления?</span></div>
+            <div class="matrix-row"><b>Смысл</b><span>Что эта форма сообщает? Какое отношение к миру, человеку, времени или задаче она выражает?</span></div>
+            <div class="matrix-row"><b>Необходимость</b><span>Можно ли убрать элемент без потери целого? Если форма случайна, она слаба. Если необходима, она держит вещь.</span></div>
+          </div>
+          <p>Этот метод особенно полезен в проектной работе. Он не заменяет расчет, вкус или опыт, но заставляет задавать правильные вопросы.</p>
+          <a class="next-link" href="#links"><b>Дальше</b><span>Открыть источники и связанные работы.</span><em>Перейти</em></a>
+          <a class="top-link" href="#start">Наверх</a>
+        </section>
+
+        <section id="links" tabindex="-1" data-title="Источники">
+          <div class="section-kicker">Маршрут для понимания</div>
+          <h2>11. Связанные работы и источники</h2>
+          <p>Этот блок нужен, чтобы не оставлять текст в пустоте. Ниже - материалы, которые помогают понять, откуда берется разговор о форме, материи, структуре, опыте и проектировании.</p>
+
+          <div class="link-grid" aria-label="Ссылки на связанные работы">
+            <a class="source-link" href="https://plato.stanford.edu/entries/aristotle-metaphysics/" target="_blank" rel="noopener noreferrer"><b>Аристотель и метафизика</b><span>Форма, материя, сущность и вопрос о том, почему вещь является тем, чем она является.</span><em>Открыть</em></a>
+            <a class="source-link" href="https://plato.stanford.edu/entries/plato-metaphysics/" target="_blank" rel="noopener noreferrer"><b>Платон и идеи</b><span>Контекст для понимания формы как устойчивой меры изменчивых вещей.</span><em>Открыть</em></a>
+            <a class="source-link" href="https://plato.stanford.edu/entries/kant-transcendental-idealism/" target="_blank" rel="noopener noreferrer"><b>Кант и опыт</b><span>Форма не только в вещи, но и в способе человеческого восприятия и познания.</span><em>Открыть</em></a>
+            <a class="source-link" href="https://plato.stanford.edu/entries/hegel/" target="_blank" rel="noopener noreferrer"><b>Гегель</b><span>Форма и содержание как развивающееся единство, а не внешнее соединение.</span><em>Открыть</em></a>
+            <a class="source-link" href="https://plato.stanford.edu/entries/structural-realism/" target="_blank" rel="noopener noreferrer"><b>Структура</b><span>Современный философский язык для разговора о форме как системе отношений.</span><em>Открыть</em></a>
+            <a class="source-link" href="https://plato.stanford.edu/entries/scientific-models/" target="_blank" rel="noopener noreferrer"><b>Модели в науке</b><span>Как форма мышления превращается в модель, объяснение и инструмент исследования.</span><em>Открыть</em></a>
+            <a class="source-link" href="https://www.gutenberg.org/ebooks/1497" target="_blank" rel="noopener noreferrer"><b>Платон - Государство</b><span>Классический текст о порядке, идее, устройстве души и устройстве полиса.</span><em>Открыть</em></a>
+            <a class="source-link" href="https://www.gutenberg.org/ebooks/26095" target="_blank" rel="noopener noreferrer"><b>Аристотель - Метафизика</b><span>Источник для темы формы, материи, сущности и причины.</span><em>Открыть</em></a>
+            <a class="source-link" href="https://www.gutenberg.org/ebooks/4280" target="_blank" rel="noopener noreferrer"><b>Кант - Критика чистого разума</b><span>Текст, где форма связана с условиями опыта и возможностью знания.</span><em>Открыть</em></a>
+            <a class="source-link" href="https://www.gutenberg.org/ebooks/57433" target="_blank" rel="noopener noreferrer"><b>Гегель - Наука логики</b><span>Работа для понимания связи формы, содержания, понятия и развития.</span><em>Открыть</em></a>
+          </div>
+
+          <div class="note">Ссылки открываются в новой вкладке. Они оставлены не для украшения, а как маршрут: от античной идеи формы через Канта и Гегеля к современной теме структуры, моделей и проектного мышления.</div>
+          <a class="next-link" href="#manifesto"><b>Дальше</b><span>Перейти к короткому манифесту формы.</span><em>Перейти</em></a>
+          <a class="top-link" href="#start">Наверх</a>
+        </section>
+
+        <section id="manifesto" tabindex="-1" data-title="Манифест">
+          <div class="section-kicker">Короткая система</div>
+          <h2>12. Манифест формы</h2>
+          <p>Если свести всю работу к коротким положениям, получится манифест. Он нужен не как догма, а как набор ориентиров для мышления, проектирования и критики.</p>
+          <div class="manifesto">
+            <p>Форма не украшает вещь после ее появления. Она участвует в самом появлении вещи.</p>
+            <p>Материал дает возможность, но только форма делает возможность определенной.</p>
+            <p>Слабая форма либо случайна, либо избыточна. Сильная форма необходима.</p>
+            <p>Форма должна быть связана с функцией, но не обязана сводиться к функции.</p>
+            <p>Форма выражает смысл даже тогда, когда никто специально не хотел ничего выражать.</p>
+            <p>Проектировать форму - значит проектировать отношения между частями, человеком, средой и действием.</p>
+            <p>Будущее создается не только новыми материалами, но и новыми способами организации.</p>
+          </div>
+          <a class="next-link" href="#glossary"><b>Дальше</b><span>Закрепить понятия в коротком словаре.</span><em>Перейти</em></a>
+          <a class="top-link" href="#start">Наверх</a>
+        </section>
+
+        <section id="glossary" data-title="Словарь">
+          <div class="section-kicker">Рабочий язык</div>
+          <h2>13. Короткий словарь</h2>
+          <p>Чтобы текст было проще обсуждать, основные понятия можно зафиксировать в коротком словаре. Эти определения не закрывают тему, но задают рабочий язык.</p>
+          <div class="glossary">
+            <div class="term"><b>Форма</b><span>Способ организации, благодаря которому материал становится определенным целым.</span></div>
+            <div class="term"><b>Материя</b><span>Возможность вещи: то, из чего она может быть создана или в чем она проявляется.</span></div>
+            <div class="term"><b>Структура</b><span>Связь частей внутри целого: порядок, отношения, иерархия и устойчивость.</span></div>
+            <div class="term"><b>Функция</b><span>Способ действия вещи: то, что она позволяет делать или выполнять.</span></div>
+            <div class="term"><b>Содержание</b><span>Смысловой материал, который становится явным только через форму.</span></div>
+            <div class="term"><b>Целое</b><span>Не сумма элементов, а организованное единство, где части работают вместе.</span></div>
+          </div>
+          <a class="next-link" href="#conclusion"><b>Дальше</b><span>Закончить работу финальным выводом.</span><em>Перейти</em></a>
+          <a class="top-link" href="#start">Наверх</a>
+        </section>
+
+        <section id="conclusion" tabindex="-1" data-title="Вывод">
+          <div class="section-kicker">Финальная сборка</div>
+          <h2>14. Вывод</h2>
+          <p>Форма кажется очевидной, пока мы понимаем ее только как внешний вид. Но как только мы начинаем думать глубже, она становится одним из главных понятий философии.</p>
+          <p>Форма не обязана существовать отдельно от предмета, чтобы быть реальной. Она реальна как организация предмета. Она не заменяет материю, но делает материю определенной. Она не отменяет содержание, но позволяет содержанию проявиться.</p>
+          <p>В эпоху сложных технологий, цифровых сред, искусственного интеллекта и проектной культуры философия формы становится особенно важной. Будущее создается не только новыми материалами и данными. Будущее создается новыми способами организации.</p>
+          <div class="final"><p>Форма - это момент, когда возможность получает устройство, устройство становится действием, а действие открывает смысл.</p></div>
+          <a class="top-link" href="#start">Наверх</a>
+        </section>
+      </article>
+
+      <aside aria-label="Боковая карта чтения">
+        <div class="side-card">
+          <b>Карта чтения</b>
+          <a href="#question">1. Главный вопрос</a>
+          <a href="#levels">2. Уровни формы</a>
+          <a href="#matter">3. Материя и форма</a>
+          <a href="#history">4. История</a>
+          <a href="#debate">5. Спор</a>
+          <a href="#content">6. Форма и содержание</a>
+          <a href="#practice">7. Практика</a>
+          <a href="#method">10. Метод</a>
+          <a href="#links">11. Источники</a>
+          <a href="#manifesto">12. Манифест</a>
+          <a href="#conclusion">14. Вывод</a>
         </div>
-
-        <div class="expert-grid" aria-label="Пять экспертных фокусов работы">
-          <div><b>Философ</b>смотрит на форму как на условие бытия вещи.</div>
-          <div><b>Методолог</b>требует ясного тезиса и строгой логики.</div>
-          <div><b>Дизайнер</b>проверяет связь формы, функции и образа.</div>
-          <div><b>Инженер</b>видит в форме работающую организацию материала.</div>
-          <div><b>Редактор</b>делает мысль простой без упрощения смысла.</div>
+        <div class="side-card">
+          <b>Прогресс</b>
+          <div class="read-meter">
+            <span><strong id="percentText">0%</strong>прочитано</span>
+            <span><strong>12</strong>минут</span>
+          </div>
         </div>
-
-        <div class="toc-box"><b>Как читать эту работу</b>Это не учебник по истории философии и не набор красивых определений. Это короткая авторская система: сначала ставится вопрос о форме, затем разбираются ее уровни, спорные позиции, практическое значение, метод анализа и источники для дальнейшего понимания.</div>
-      </section>
-
-      <section id="question" tabindex="-1">
-        <h2>1. Главный вопрос</h2>
-        <p class="lead">Мы часто воспринимаем форму как оболочку: линию, силуэт, внешний вид. Но стоит задать один простой вопрос, и тема становится философской: почему вещь является именно этой вещью, а не случайной суммой материала?</p>
-        <p>Один и тот же материал может стать разными предметами. Глина может стать кирпичом, сосудом, статуей или комом. Металл может стать мостом, ножом, скрепкой или музыкальным инструментом. Буквы могут стать шумом, инструкцией, признанием или стихотворением. Во всех случаях материал важен, но он не объясняет целого полностью.</p>
-        <p>Чтобы вещь возникла, материал должен быть организован. Должны появиться граница, порядок, внутренние связи и назначение. Именно этот способ организации мы называем формой в сильном смысле слова.</p>
-        <div class="thesis">Форма - это не украшение материала. Форма - это способ, которым материал становится вещью, а вещь становится носителем смысла.</div>
-        <p>Поэтому философия формы начинается не с вопроса о красоте, а с вопроса об определенности. Почему куча камней еще не дом? Почему набор деталей еще не механизм? Почему тело не сводится к химическому составу? Почему текст больше суммы слов? Ответ во всех случаях связан с формой.</p>
-        <a class="top-link" href="#start">Наверх</a>
-      </section>
-
-      <section id="levels" tabindex="-1">
-        <h2>2. Четыре уровня формы</h2>
-        <p>Ошибка начинается тогда, когда форму сводят только к внешности. В действительности форма работает сразу на нескольких уровнях. Она может быть видимой, но не сводится к видимости. Она может быть измеримой, но не исчерпывается размером. Она может быть красивой, но не обязана быть только украшением.</p>
-        <div class="scheme" aria-label="Четыре уровня формы">
-          <div>Образ<br />то, как вещь является</div>
-          <div>Структура<br />как связаны части</div>
-          <div>Функция<br />как вещь действует</div>
-          <div class="dark">Смысл<br />почему это целое</div>
-        </div>
-        <p>Первый уровень - образ. Это то, что мы видим сразу: контур, пропорция, масса, ритм, поверхность. Через образ вещь входит в восприятие.</p>
-        <p>Второй уровень - структура. Здесь форма уже не просто видна, а организует части. Дом отличается от груды кирпичей не количеством материала, а связью элементов.</p>
-        <p>Третий уровень - функция. Форма показывает, что вещь умеет делать. Стул рассчитан на сидение, ручка двери - на захват, мост - на переход, интерфейсная кнопка - на действие.</p>
-        <p>Четвертый уровень - смысл. На этом уровне форма отвечает не только на вопрос «как устроено?», но и на вопрос «зачем это существует?».</p>
-        <div class="formula"><strong>Рабочая формула</strong>Материя дает возможность. Структура дает устойчивость. Функция дает действие. Смысл дает направление. Форма соединяет эти уровни в одно целое.</div>
-        <a class="top-link" href="#start">Наверх</a>
-      </section>
-
-      <section>
-        <h2>3. Материя и форма</h2>
-        <p>Классическая философская пара - материя и форма. Материя отвечает на вопрос «из чего?». Форма отвечает на вопрос «как это стало именно этим?». Но эта пара не должна пониматься как борьба двух чужих начал. Вещь возникает не из одной материи и не из одной формы, а из их соединения.</p>
-        <p>Материя без формы остается возможностью. Это запас, ресурс, потенциал. Форма без материи остается схемой, замыслом или образом. Только вместе они дают конкретную вещь.</p>
-        <p>В этом смысле форма не находится «снаружи» вещи. Она не наклеивается на предмет после его создания. Она действует изнутри как принцип собранности. Если форма уничтожена, вещь может физически сохранять материал, но перестает быть прежним целым.</p>
-        <div class="quote">Форма - это не оболочка вещи. Это дисциплина, благодаря которой вещь держится как целое.</div>
-        <a class="top-link" href="#start">Наверх</a>
-      </section>
-
-      <section id="history" tabindex="-1">
-        <h2>4. Краткая история идеи формы</h2>
-        <p>У Платона форма связана с идеей. Вещи чувственного мира меняются, стареют и исчезают, но за ними мыслится устойчивый образ. Без устойчивых форм невозможно ни познание, ни оценка, ни сравнение.</p>
-        <p>Аристотель делает решающий поворот. Он помещает форму не в отдельный мир, а внутрь самой вещи. Форма - это то, благодаря чему вещь есть то, что она есть.</p>
-        <p>Позже тема формы меняет направление. В Средние века она связывается с сущностью вещи. У Канта форма становится условием опыта. У Гегеля форма и содержание рассматриваются в развитии. В XX веке структурализм и феноменология показывают, что смысл рождается не только из элементов, но и из отношений.</p>
-        <div class="scheme" aria-label="Историческая траектория идеи формы">
-          <div>Платон<br />форма как идея</div>
-          <div>Аристотель<br />форма как сущность</div>
-          <div>Кант<br />форма как условие опыта</div>
-          <div class="dark">Современность<br />форма как структура</div>
-        </div>
-        <p>Сегодня мы часто говорим не «форма», а структура, модель, паттерн, архитектура, система, интерфейс, композиция, алгоритм. Но вопрос остается тем же: как элементы становятся целым?</p>
-        <a class="top-link" href="#start">Наверх</a>
-      </section>
-
-      <section id="debate" tabindex="-1">
-        <h2>5. Дискуссия: форма реальна или придумана?</h2>
-        <p>Главный спор можно сформулировать так: форма существует реально или это только удобное слово, которым мы называем расположение частей?</p>
-        <div class="cards">
-          <div class="card"><b>Аргумент за реальность формы</b><span>Без формы нельзя объяснить целое. Дом - не просто кирпичи. Организм - не просто клетки. Текст - не просто слова. Механизм - не просто детали.</span></div>
-          <div class="card"><b>Аргумент против</b><span>Если сделать форму отдельной сущностью, мы рискуем удвоить мир. Тогда форма становится туманным объяснением вместо точного анализа.</span></div>
-        </div>
-        <p>Первая позиция защищает целостность. Она говорит: мир состоит не только из частиц, деталей и элементов. Он состоит из организованных целых.</p>
-        <p>Вторая позиция защищает строгость. Она предупреждает: нельзя превращать форму в магическое слово. Если мы говорим «форма объясняет», но не показываем, как именно организованы части, мы ничего не объяснили.</p>
-        <div class="thesis">Форма реальна не как отдельная вещь рядом с предметом, а как порядок, благодаря которому предмет существует как предмет.</div>
-        <a class="top-link" href="#start">Наверх</a>
-      </section>
-
-      <section>
-        <h2>6. Форма и содержание: ложная война</h2>
-        <p>В культуре часто говорят: «Главное - содержание, а форма вторична». Это звучит убедительно, но только до тех пор, пока мы не спросим: как содержание вообще становится доступным?</p>
-        <p>Содержание без формы не может быть выражено. Мысль должна стать фразой. Музыкальное чувство - ритмом и звучанием. Инженерный замысел - чертежом, геометрией, технологией.</p>
-        <p>Но и форма без содержания опасна. Она становится пустым стилем, эффектом, оболочкой без необходимости. В дизайне это приводит к красивой, но неудобной вещи. В науке - к сложной, но пустой схеме. В управлении - к регламенту без дела.</p>
-        <p>Форма и содержание не враги. Содержание ищет форму, чтобы проявиться. Форма требует содержания, чтобы быть необходимой.</p>
-        <a class="top-link" href="#start">Наверх</a>
-      </section>
-
-      <section id="practice" tabindex="-1">
-        <h2>7. Почему это важно сегодня</h2>
-        <p>Философия формы важна не только для истории философии. Она нужна там, где человек создает, проектирует, объясняет и организует.</p>
-        <h3>Дизайн</h3>
-        <p>В дизайне форма соединяет образ, пользу и поведение. Хорошая ручка двери уже показывает, как ее взять. Хорошая кнопка в интерфейсе уже сообщает, что с ней можно сделать.</p>
-        <h3>Архитектура</h3>
-        <p>В архитектуре форма организует пространство жизни: сценарий движения, режим света, отношение частного и общего, чувство открытости или защищенности.</p>
-        <h3>Инженерия</h3>
-        <p>В инженерии форма становится условием работы. Деталь должна выдерживать нагрузку, изготавливаться выбранной технологией, собираться с другими деталями и выполнять функцию.</p>
-        <h3>Биология</h3>
-        <p>В живой природе форма не просто сделана, а выращена. Кость, лист, крыло, глаз или рука показывают, как структура связана с развитием, средой и функцией.</p>
-        <h3>Искусственный интеллект</h3>
-        <p>В искусственном интеллекте вопрос формы возвращается как вопрос структуры данных и отношений. Лицо - это не набор пикселей. Текст - не набор токенов. Поведение - не один сигнал.</p>
-        <div class="note">Философия формы может стать мостом между гуманитарным и техническим мышлением. Она одинаково важна художнику, инженеру, архитектору, исследователю, программисту и преподавателю.</div>
-        <a class="top-link" href="#start">Наверх</a>
-      </section>
-
-      <section>
-        <h2>8. Опасности неправильного понимания формы</h2>
-        <p>Первая крайность - формализм. В этом случае форма отрывается от содержания, функции и жизни. Она превращается в стиль ради стиля. Такая форма может быть эффектной, но она не необходима.</p>
-        <p>Вторая крайность - грубый редукционизм. В этом случае форму считают чем-то вторичным и пытаются объяснить все только материалом или отдельными элементами. Но тогда исчезает целое.</p>
-        <p>Зрелое понимание формы держит баланс. Оно не превращает форму в мистику и не уничтожает ее в наборе частей. Оно видит форму как рабочую организацию.</p>
-        <a class="top-link" href="#start">Наверх</a>
-      </section>
-
-      <section>
-        <h2>9. Авторский тезис</h2>
-        <p>Философию формы можно определить как учение о возникновении собранности. Мир полон материи, энергии, слов, изображений, данных и жестов. Но не всякая совокупность становится вещью.</p>
-        <p>Форма появляется там, где хаос получает границу, а граница не просто отделяет, но организует. Форма - это не только край вещи. Это ее внутренняя дисциплина.</p>
-        <div class="thesis">Форма - это событие проявления. Содержание становится видимым только тогда, когда находит свою форму.</div>
-        <p>Создавать форму - значит не украшать готовое, а мыслить через устройство. Дизайнер, инженер, писатель, архитектор, художник и философ занимаются родственным делом: они ищут такую организацию материала, при которой вещь становится точной.</p>
-        <a class="top-link" href="#start">Наверх</a>
-      </section>
-
-      <section id="method" tabindex="-1">
-        <h2>10. Метод анализа формы</h2>
-        <p>Чтобы философия формы не осталась абстрактным рассуждением, ее можно превратить в метод. Любую вещь, проект, текст, интерфейс, здание или техническую деталь можно анализировать через несколько вопросов.</p>
-        <div class="matrix" aria-label="Метод анализа формы">
-          <div class="matrix-row"><b>Граница</b><span>Где вещь начинается и заканчивается? Что отделяет ее от среды, шума, случайности и лишнего?</span></div>
-          <div class="matrix-row"><b>Структура</b><span>Как связаны части? Есть ли порядок, иерархия, ритм, повтор, симметрия, напряжение или центр?</span></div>
-          <div class="matrix-row"><b>Функция</b><span>Что эта форма позволяет делать? Как она направляет действие человека, материала или системы?</span></div>
-          <div class="matrix-row"><b>Материал</b><span>Соответствует ли форма веществу, технологии, прочности, масштабу и способу изготовления?</span></div>
-          <div class="matrix-row"><b>Смысл</b><span>Что эта форма сообщает? Какое отношение к миру, человеку, времени или задаче она выражает?</span></div>
-          <div class="matrix-row"><b>Необходимость</b><span>Можно ли убрать элемент без потери целого? Если форма случайна, она слаба. Если необходима, она держит вещь.</span></div>
-        </div>
-        <p>Этот метод особенно полезен в проектной работе. Он не заменяет расчет, вкус или опыт, но заставляет задавать правильные вопросы.</p>
-        <a class="top-link" href="#start">Наверх</a>
-      </section>
-
-      <section id="links" tabindex="-1">
-        <h2>11. Связанные работы и источники</h2>
-        <p>Этот блок нужен, чтобы не оставлять текст в пустоте. Ниже - материалы, которые помогают понять, откуда берется разговор о форме, материи, структуре, опыте и проектировании.</p>
-
-        <div class="link-grid" aria-label="Ссылки на связанные работы">
-          <a class="source-link" href="https://plato.stanford.edu/entries/aristotle-metaphysics/" target="_blank" rel="noopener noreferrer"><b>Аристотель и метафизика</b><span>Форма, материя, сущность и вопрос о том, почему вещь является тем, чем она является.</span><em>Открыть</em></a>
-          <a class="source-link" href="https://plato.stanford.edu/entries/plato-metaphysics/" target="_blank" rel="noopener noreferrer"><b>Платон и идеи</b><span>Контекст для понимания формы как устойчивой меры изменчивых вещей.</span><em>Открыть</em></a>
-          <a class="source-link" href="https://plato.stanford.edu/entries/kant-transcendental-idealism/" target="_blank" rel="noopener noreferrer"><b>Кант и опыт</b><span>Форма не только в вещи, но и в способе человеческого восприятия и познания.</span><em>Открыть</em></a>
-          <a class="source-link" href="https://plato.stanford.edu/entries/hegel/" target="_blank" rel="noopener noreferrer"><b>Гегель</b><span>Форма и содержание как развивающееся единство, а не внешнее соединение.</span><em>Открыть</em></a>
-          <a class="source-link" href="https://plato.stanford.edu/entries/structural-realism/" target="_blank" rel="noopener noreferrer"><b>Структура</b><span>Современный философский язык для разговора о форме как системе отношений.</span><em>Открыть</em></a>
-          <a class="source-link" href="https://plato.stanford.edu/entries/scientific-models/" target="_blank" rel="noopener noreferrer"><b>Модели в науке</b><span>Как форма мышления превращается в модель, объяснение и инструмент исследования.</span><em>Открыть</em></a>
-          <a class="source-link" href="https://www.gutenberg.org/ebooks/1497" target="_blank" rel="noopener noreferrer"><b>Платон - Государство</b><span>Классический текст о порядке, идее, устройстве души и устройстве полиса.</span><em>Открыть</em></a>
-          <a class="source-link" href="https://www.gutenberg.org/ebooks/26095" target="_blank" rel="noopener noreferrer"><b>Аристотель - Метафизика</b><span>Источник для темы формы, материи, сущности и причины.</span><em>Открыть</em></a>
-          <a class="source-link" href="https://www.gutenberg.org/ebooks/4280" target="_blank" rel="noopener noreferrer"><b>Кант - Критика чистого разума</b><span>Текст, где форма связана с условиями опыта и возможностью знания.</span><em>Открыть</em></a>
-          <a class="source-link" href="https://www.gutenberg.org/ebooks/57433" target="_blank" rel="noopener noreferrer"><b>Гегель - Наука логики</b><span>Работа для понимания связи формы, содержания, понятия и развития.</span><em>Открыть</em></a>
-        </div>
-
-        <div class="note">Ссылки открываются в новой вкладке. Они оставлены не для украшения, а как маршрут: от античной идеи формы через Канта и Гегеля к современной теме структуры, моделей и проектного мышления.</div>
-        <a class="top-link" href="#start">Наверх</a>
-      </section>
-
-      <section id="manifesto" tabindex="-1">
-        <h2>12. Манифест формы</h2>
-        <p>Если свести всю работу к коротким положениям, получится манифест. Он нужен не как догма, а как набор ориентиров для мышления, проектирования и критики.</p>
-        <div class="manifesto">
-          <p>Форма не украшает вещь после ее появления. Она участвует в самом появлении вещи.</p>
-          <p>Материал дает возможность, но только форма делает возможность определенной.</p>
-          <p>Слабая форма либо случайна, либо избыточна. Сильная форма необходима.</p>
-          <p>Форма должна быть связана с функцией, но не обязана сводиться к функции.</p>
-          <p>Форма выражает смысл даже тогда, когда никто специально не хотел ничего выражать.</p>
-          <p>Проектировать форму - значит проектировать отношения между частями, человеком, средой и действием.</p>
-          <p>Будущее создается не только новыми материалами, но и новыми способами организации.</p>
-        </div>
-        <a class="top-link" href="#start">Наверх</a>
-      </section>
-
-      <section>
-        <h2>13. Короткий словарь</h2>
-        <p>Чтобы текст было проще обсуждать, основные понятия можно зафиксировать в коротком словаре. Эти определения не закрывают тему, но задают рабочий язык.</p>
-        <div class="glossary">
-          <div class="term"><b>Форма</b><span>Способ организации, благодаря которому материал становится определенным целым.</span></div>
-          <div class="term"><b>Материя</b><span>Возможность вещи: то, из чего она может быть создана или в чем она проявляется.</span></div>
-          <div class="term"><b>Структура</b><span>Связь частей внутри целого: порядок, отношения, иерархия и устойчивость.</span></div>
-          <div class="term"><b>Функция</b><span>Способ действия вещи: то, что она позволяет делать или выполнять.</span></div>
-          <div class="term"><b>Содержание</b><span>Смысловой материал, который становится явным только через форму.</span></div>
-          <div class="term"><b>Целое</b><span>Не сумма элементов, а организованное единство, где части работают вместе.</span></div>
-        </div>
-        <a class="top-link" href="#start">Наверх</a>
-      </section>
-
-      <section id="conclusion" tabindex="-1">
-        <h2>14. Вывод</h2>
-        <p>Форма кажется очевидной, пока мы понимаем ее только как внешний вид. Но как только мы начинаем думать глубже, она становится одним из главных понятий философии.</p>
-        <p>Форма не обязана существовать отдельно от предмета, чтобы быть реальной. Она реальна как организация предмета. Она не заменяет материю, но делает материю определенной. Она не отменяет содержание, но позволяет содержанию проявиться.</p>
-        <p>В эпоху сложных технологий, цифровых сред, искусственного интеллекта и проектной культуры философия формы становится особенно важной. Будущее создается не только новыми материалами и данными. Будущее создается новыми способами организации.</p>
-        <div class="final"><p>Форма - это момент, когда возможность получает устройство, устройство становится действием, а действие открывает смысл.</p></div>
-        <a class="top-link" href="#start">Наверх</a>
-      </section>
-    </article>
+      </aside>
+    </div>
   </main>
 
+  <div class="floating-tools" aria-label="Быстрые инструменты">
+    <a href="#start" title="Наверх">↑</a>
+    <a href="#links" title="Источники">i</a>
+    <button type="button" id="copyButtonFloat" title="Скопировать ссылку">⛓</button>
+  </div>
+
   <footer>
-    Авторская дискуссионная работа «Философия формы». Версия подготовлена как минималистичный одностраничный сайт для GitHub Pages. Добавлены ссылки на связанные работы и источники для понимания темы.
+    Авторская дискуссионная работа «Философия формы». Версия подготовлена как минималистичный одностраничный сайт для GitHub Pages. Добавлены ссылки на связанные работы, карта чтения, активная навигация, быстрые действия и улучшенный мобильный режим.
   </footer>
 
   <script>
     const progress = document.getElementById('progress');
+    const percentText = document.getElementById('percentText');
+    const copyButton = document.getElementById('copyButton');
+    const copyButtonFloat = document.getElementById('copyButtonFloat');
+    const copyStatus = document.getElementById('copyStatus');
+    const sections = [...document.querySelectorAll('section[id]')];
+    const navLinks = [...document.querySelectorAll('nav a, aside a')];
 
     function updateProgress() {
       const scrollTop = window.scrollY || document.documentElement.scrollTop;
       const documentHeight = document.documentElement.scrollHeight - window.innerHeight;
-      const percent = documentHeight > 0 ? (scrollTop / documentHeight) * 100 : 0;
+      const percent = documentHeight > 0 ? Math.round((scrollTop / documentHeight) * 100) : 0;
       progress.style.width = percent + '%';
+      if (percentText) percentText.textContent = percent + '%';
     }
 
-    window.addEventListener('scroll', updateProgress, { passive: true });
+    function setActiveLink() {
+      let current = sections[0]?.id || 'start';
+      for (const section of sections) {
+        const rect = section.getBoundingClientRect();
+        if (rect.top <= 140) current = section.id;
+      }
+      navLinks.forEach(link => {
+        const isActive = link.getAttribute('href') === '#' + current;
+        link.classList.toggle('active', isActive);
+      });
+    }
+
+    async function copyPageLink() {
+      try {
+        await navigator.clipboard.writeText(window.location.href);
+        if (copyStatus) copyStatus.textContent = 'ссылка скопирована';
+        setTimeout(() => { if (copyStatus) copyStatus.textContent = ''; }, 1800);
+      } catch (error) {
+        if (copyStatus) copyStatus.textContent = 'не удалось скопировать';
+      }
+    }
+
+    window.addEventListener('scroll', () => { updateProgress(); setActiveLink(); }, { passive: true });
     window.addEventListener('resize', updateProgress);
+    copyButton?.addEventListener('click', copyPageLink);
+    copyButtonFloat?.addEventListener('click', copyPageLink);
     updateProgress();
+    setActiveLink();
   </script>
 </body>
 </html>
